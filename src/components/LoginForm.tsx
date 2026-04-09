@@ -1,10 +1,12 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { loginSchema, type LoginFormData } from '../schemas/login'
 import InputField from './InputField'
 
 export default function LoginForm() {
+  const navigate = useNavigate()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
 
@@ -17,14 +19,13 @@ export default function LoginForm() {
     mode: 'onTouched',
   })
 
-  const onSubmit = async (data: LoginFormData) => {
+  const onSubmit = async (_data: LoginFormData) => {
     setIsSubmitting(true)
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1500))
-    console.log('Login data:', data)
     setIsSubmitting(false)
     setSubmitSuccess(true)
-    setTimeout(() => setSubmitSuccess(false), 3000)
+    setTimeout(() => navigate('/dashboard'), 800)
   }
 
   return (
